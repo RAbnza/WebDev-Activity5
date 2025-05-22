@@ -1,5 +1,4 @@
 <?php
-// delete.php?id=1 – delete a contact
 
 require_once 'dbConnect.php';
 
