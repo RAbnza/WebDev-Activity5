@@ -1,18 +1,16 @@
 <?php
 require_once 'dbConnect.php';
 
-// Determine sort column and direction
 $allowed_columns = ['id', 'name', 'email', 'phone'];
 $sort = in_array($_GET['sort'] ?? '', $allowed_columns) ? $_GET['sort'] : 'id';
 $order = ($_GET['order'] ?? 'desc') === 'asc' ? 'asc' : 'desc';
 
 $next_order = $order === 'asc' ? 'desc' : 'asc';
 
-// Fetch all contacts with sorting
 $sql = "SELECT id, name, email, phone FROM contacts ORDER BY $sort $order";
 $result = $conn->query($sql);
 
-// Helper function for building sort links and showing caret
+// for sorting
 function sort_link($col, $current_sort, $current_order, $label) {
     $next_order = ($current_sort === $col && $current_order === 'asc') ? 'desc' : 'asc';
     $caret = '';
@@ -30,6 +28,7 @@ function sort_link($col, $current_sort, $current_order, $label) {
 <head>
     <meta charset="UTF-8">
     <title>Contact Manager</title>
+    <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="blue"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-2.5 3.6-4.5 8-4.5s8 2 8 4.5v1H4z"/></svg>'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -92,7 +91,6 @@ function sort_link($col, $current_sort, $current_order, $label) {
                 </table>
             </div>
         </div>
-        <!-- Delete Confirmation Modal -->
         <div id="deleteModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
             <div class="bg-white rounded-lg p-8 max-w-md w-full shadow-xl">
                 <h2 class="text-2xl font-bold mb-4 text-red-600">Confirm Delete</h2>
@@ -107,21 +105,18 @@ function sort_link($col, $current_sort, $current_order, $label) {
     <footer class="w-full text-center py-6 bg-gray-100 border-t text-sm text-gray-600 mt-auto flex flex-col items-center">
     <div class="flex flex-wrap justify-center gap-4 items-center">
         <span class="flex items-center gap-1">
-        <!-- User Icon -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9.001 9.001 0 0112 15c2.042 0 3.918.68 5.388 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
         Rendel N. Abainza
         </span>
         <span class="flex items-center gap-1">
-        <!-- Address Book Icon -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
         Contact Manager
         </span>
         <span class="flex items-center gap-1">
-        <!-- Academic Cap Icon -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H5m7 0h7" />
         </svg>
